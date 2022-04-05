@@ -1,0 +1,49 @@
+config:
+  target: "http://localhost:5000"
+  # target: "http://65.2.82.148:5000"
+
+  phases:
+    - duration: 1
+      arrivalRate: 1
+      name: Warm up
+  processor: "./processor.js"
+  payload:
+    path: "resultId.csv"
+    fields:
+      - "_id"
+      # - "name"
+      # - "dateOfBirth"
+      # - "gender"
+      # - "phone"
+      # - "recoveryEmail"
+    order: sequence
+    skipHeader: true
+
+scenarios:
+  - flow:
+      # - post:
+      #     url: "/auth/register"
+      #     json:
+      #       _id: "{{ _id }}"
+      #       name: "{{ name }}"
+      #       dateOfBirth: "{{ dateOfBirth }}"
+      #       gender: "{{ gender }}"
+      #       phone: "+{{ phone }}"
+      #       recoveryEmail: "{{ recoveryEmail }}"
+      #     # beforeRequest:
+      #     #   - "generateSignUpData"
+      #     afterResponse: "afterRegisterRequest"
+      - get:
+          url: '/screen/home'
+          headers:
+            X-My-Header: "{{ _id }}"
+          beforeRequest:
+            - 'homeScreenBeforeRequest'
+          afterResponse:
+            - 'homeScreenAfterRequest'
+      # - patch:
+      #     url: /screen/generalUsers
+      #     beforeRequest:
+      #       - 'generalUserBeforeRequest'
+      #     afterResponse:
+      #       - 'generalUserAfterRequest'
