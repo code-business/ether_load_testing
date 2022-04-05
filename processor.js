@@ -26,7 +26,7 @@ function afterRegisterRequest(requestParams, response, context, ee, next) {
   return next();
 }
 function homeScreenBeforeRequest(request, context, ee, next) {
-  console.log(context.vars._id)
+  // console.log(context.vars._id)
   const token = getSignedToken(context.vars._id)
   request["headers"] = {
     authorization: "Bearer " + token,
@@ -36,7 +36,7 @@ function homeScreenBeforeRequest(request, context, ee, next) {
 }
 function homeScreenAfterRequest(request, response, context, ee, next) {
   
-  // console.log("homeScreenResponse", response.body);
+  console.log("homeScreenResponse", request.headers["x-my-header"],response.body);
   return next();
 }
 function generalUserBeforeRequest(request, context, ee, next) {
